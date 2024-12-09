@@ -1,0 +1,18 @@
+@model IEnumerable<Teacher>
+
+<h1>Bonjour depuis /Teacher/Index</h1>
+<p>Voici les informations des professeurs:</p>
+<ul>
+    @foreach (var teacher in Model)
+    {
+        <li>@teacher.Firstname @teacher.Lastname : Enseigne  @teacher.Teach</li>
+    }
+</ul>
+@*
+<h2>Voici un etudiant :</h2>
+<ul>
+    <li>Prenom : @Model.Firstname</li>
+    <li>Nom : @Model.Lastname </li>
+    <li>Age : @Model.Age</li>
+</ul>
+*@

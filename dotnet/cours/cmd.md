@@ -25,3 +25,9 @@ dotnet build
 ```bash
 dotnet run
 ```
+
+### mode debug
+
+```bash
+dotnet run --configuration Debug
+```
