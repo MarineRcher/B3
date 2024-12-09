@@ -1,18 +1,35 @@
 @model IEnumerable<Student>
+    <h2>Liste des Étudiants</h2>
 
-<h1>Bonjour depuis /Student/Index</h1>
-<p>Voici les informations des étudiants:</p>
-<ul>
-    @foreach (var student in Model)
-    {
-        <li>@student.Firstname @student.Lastname</li>
-    }
-</ul>
-@*
-<h2>Voici un etudiant :</h2>
-<ul>
-    <li>Prenom : @Model.Firstname</li>
-    <li>Nom : @Model.Lastname </li>
-    <li>Age : @Model.Age</li>
-</ul>
-*@
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Prenom</th>
+                <th>Nom de famille</th>
+                <th>Âge</th>
+                <th>Spécialité</th>
+                <th>Date d'admission</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model) {
+            <tr>
+                <td>@student.Id</td>
+                <td>@student.Firstname</td>
+                <td>@student.Lastname</td>
+                <td>@student.Age</td>
+                <td>@student.Major</td>
+                <td>@student.AdmissionDate</td>
+                <td>
+                    <a asp-controller="Student" asp-action="ShowDetails" asp-route-id="@student.Id">Détails</a
+                    >
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    </Etudiant>
+
+<a asp-action="Add">Ajouter un etudiant</a>
