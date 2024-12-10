@@ -31,3 +31,28 @@ dotnet run
 ```bash
 dotnet run --configuration Debug
 ```
+
+### package connexion db mariadb
+
+```bash
+dotnet add package Pomelo.EntityFrameworkCore.MySql --version 9.0.0-preview.1
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 9.0.0
+```
+
+### dotnet ef
+
+```bash
+export PATH="$PATH:/home/marine/.dotnet/tools"
+```
+
+Créer une migration
+
+```bash
+dotnet ef migrations add NomMigration
+```
+
+Appliquer une migration
+
+```bash
+dotnet ef database update
+```

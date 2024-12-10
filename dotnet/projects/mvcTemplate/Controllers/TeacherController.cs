@@ -2,19 +2,68 @@ using Microsoft.AspNetCore.Mvc;
 using mvc.Models;
 
 namespace mvc.Controllers;
+using mvc.Data;
 
 public class TeacherController : Controller
 {
-    private static List<Teacher> teachers = new()
-        {
-            new() { AdmissionDate = new DateTime(2021, 9, 1), Age = 20, Firstname = "John", Id = 1, Lastname = "Dupoint", Teach=Teach.CS},
-            new() { AdmissionDate = new DateTime(2021, 9, 1), Age = 20, Firstname = "John", Id = 1, Lastname = "Dupoint", Teach=Teach.IT},
-            new() { AdmissionDate = new DateTime(2021, 9, 1), Age = 20, Firstname = "John", Id = 1, Lastname = "Dupoint", Teach=Teach.MATHS},
-            new() { AdmissionDate = new DateTime(2021, 9, 1), Age = 20, Firstname = "John", Id = 1, Lastname = "Dupoint", Teach=Teach.OTHERS},
-        };
+    private readonly ApplicationDbContext _context;
 
+    // Constructeur
+    public TeacherController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
     public ActionResult Index()
     {
+        var teachers = _context.Teachers.ToList();
         return View(teachers);
+    }
+    public IActionResult ShowDetails(int id)
+    {
+        var teacher = _context.Teachers.FirstOrDefault(e => e.Id == id);
+        if (teacher == null)
+        {
+            return NotFound();
+        }
+        return View(teacher);
     } 
+    public IActionResult Add()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Add(Teacher teacher)
+    {
+         if (!ModelState.IsValid)
+        {
+            return View();
+        }
+        
+        _context.Teachers.Add(teacher);
+        _context.SaveChanges();
+        return RedirectToAction("Index");
+    }
+        public IActionResult Delete(int id)
+    {
+        var teacher = _context.Teachers.FirstOrDefault(e => e.Id == id);
+        if (teacher == null)
+        {
+            return NotFound();
+        }
+        return View(teacher);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public IActionResult DeleteConfirmed(int id)
+    {
+        var teacher = _context.Teachers.FirstOrDefault(e => e.Id == id);
+        if (teacher != null)
+        {
+            _context.Teachers.Remove(teacher);
+            _context.SaveChanges();
+            
+        }
+        return RedirectToAction(nameof(Index));
+    }
 }

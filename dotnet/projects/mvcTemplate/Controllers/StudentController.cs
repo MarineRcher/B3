@@ -1,26 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
 using mvc.Models;
-
+using mvc.Data;
+using Microsoft.EntityFrameworkCore;
 namespace mvc.Controllers;
 
 public class StudentController : Controller
 {
-    private static List<Student> students = new()
+    private readonly ApplicationDbContext _context;
+    public StudentController(ApplicationDbContext context)
     {
-        new() { AdmissionDate = new DateTime(2021, 9, 1), Age = 20, Firstname = "John", GPA = 3.5, Id = 1, Lastname = "Doe", Major = Major.CS },
-        new() { AdmissionDate = new DateTime(2021, 9, 1), Age = 20, Firstname = "John", GPA = 3.5, Id = 1, Lastname = "Doe", Major = Major.CS },
-        new() { AdmissionDate = new DateTime(2021, 9, 1), Age = 20, Firstname = "John", GPA = 3.5, Id = 1, Lastname = "Doe", Major = Major.CS },
-        new() { AdmissionDate = new DateTime(2021, 9, 1), Age = 20, Firstname = "John", GPA = 3.5, Id = 1, Lastname = "Doe", Major = Major.CS },
-    };
-
+        _context = context;
+    
+    }
     public ActionResult Index()
     {
+        var students = _context.Students.ToList();
         return View(students);
+
     } 
 
     public IActionResult ShowDetails(int id)
     {
-        var student = students.FirstOrDefault(e => e.Id == id);
+        var student = _context.Students.FirstOrDefault(e => e.Id == id);
         if (student == null)
         {
             return NotFound();
@@ -36,17 +37,18 @@ public class StudentController : Controller
     [HttpPost]
     public IActionResult Add(Student student)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            student.Id = students.Max(e => e.Id) + 1;
-            students.Add(student);
-            return RedirectToAction(nameof(Index));
+            return View();
         }
-        return View(student);
+        
+        _context.Students.Add(student);
+        _context.SaveChanges();
+        return RedirectToAction("Index");
     }
-        public IActionResult Delete(int id)
+    public IActionResult Delete(int id)
     {
-        var student = students.FirstOrDefault(e => e.Id == id);
+        var student = _context.Students.FirstOrDefault(e => e.Id == id);
         if (student == null)
         {
             return NotFound();
@@ -57,10 +59,11 @@ public class StudentController : Controller
     [HttpPost, ActionName("Delete")]
     public IActionResult DeleteConfirmed(int id)
     {
-        var student = students.FirstOrDefault(e => e.Id == id);
+        var student = _context.Students.FirstOrDefault(e => e.Id == id);
         if (student != null)
         {
-            students.Remove(student);
+            _context.Students.Remove(student);
+            _context.SaveChanges();
         }
         return RedirectToAction(nameof(Index));
     }

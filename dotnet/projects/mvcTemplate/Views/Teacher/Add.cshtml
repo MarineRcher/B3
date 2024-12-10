@@ -1,6 +1,6 @@
-@model Student
+@model Teacher
 
-<h2>Ajouter un Nouvel Étudiant</h2>
+<h2>Ajouter un Nouveau professeur</h2>
 
 <form asp-action="Add">
     <div class="form-group">
@@ -24,23 +24,19 @@
         <span asp-validation-for="Age" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="GPA"></label>
-        <input asp-for="GPA" class="form-control" />
-        <span asp-validation-for="GPA" class="text-danger"></span>
-    </div>
-    <div class="form-group">
         <label asp-for="AdmissionDate"></label>
         <input asp-for="AdmissionDate" class="form-control" />
         <span asp-validation-for="AdmissionDate" class="text-danger"></span>
     </div>
-   <div class="form-group">
-    <label asp-for="Major"></label>
-    <select asp-for="Major" asp-items="Html.GetEnumSelectList<Major>()" class="form-control">
-        <option value="">Sélectionnez un choix</option>
-    </select>
-    <span asp-validation-for="Major" class="text-danger"></span>
-</div>
-    <button type="submit" class="btn btn-primary">Ajouter l'Étudiant</button>
+    <div class="form-group">
+        <label asp-for="Teach"></label>
+        <select asp-for="Teach" asp-items="Html.GetEnumSelectList<Teach>()" class="form-control">
+             <option value="">Sélectionnez un choix</option>
+        </select>
+        <span asp-validation-for="Teach" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Ajouter le professeur</button>
 </form>
 
 <a asp-action="Index">Retour à la Liste</a>
