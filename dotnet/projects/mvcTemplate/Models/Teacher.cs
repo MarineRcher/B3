@@ -1,5 +1,7 @@
 
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.Contracts;
+using Microsoft.AspNetCore.Identity;
 
 namespace mvc.Models;
 
@@ -7,9 +9,9 @@ public enum Teach
 {
     CS, IT, MATHS, OTHERS
 }
-public class Teacher 
+public class Teacher : IdentityUser
 {
-    public int Id{get; set;}
+    //public int Id{get; set;}
 
     [Required(ErrorMessage = "Le nom est obligatoire")]
     [StringLength(50, MinimumLength = 2, ErrorMessage = "Le nom doit comporter entre 2 et 50 caractères")]
@@ -27,5 +29,10 @@ public class Teacher
     [Display(Name ="Date d'admission")]
     public DateTime AdmissionDate { get;set;}
 
+    [Required(ErrorMessage ="Specialite manquante")]
     public Teach Teach {get; set;}
+
+    [Required]
+    [Url]
+    public string PersonalWebSite {get; set;}
 }

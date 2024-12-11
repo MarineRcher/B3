@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using mvc.Models;
 namespace mvc.Data;
 
 // classe qui definit les tables de la bdd
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : IdentityDbContext<Teacher>
 {
     public DbSet<Teacher> Teachers {get; set;}
 

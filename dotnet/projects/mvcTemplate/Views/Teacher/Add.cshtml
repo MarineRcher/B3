@@ -4,11 +4,6 @@
 
 <form asp-action="Add">
     <div class="form-group">
-        <label asp-for="Id"></label>
-        <input asp-for="Id" class="form-control" />
-        <span asp-validation-for="Id" class="text-danger"></span>
-    </div>
-    <div class="form-group">
         <label asp-for="Firstname"></label>
         <input asp-for="Firstname" class="form-control" />
         <span asp-validation-for="Firstname" class="text-danger"></span>
@@ -27,6 +22,11 @@
         <label asp-for="AdmissionDate"></label>
         <input asp-for="AdmissionDate" class="form-control" />
         <span asp-validation-for="AdmissionDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PersonalWebSite"></label>
+        <input asp-for="PersonalWebSite" class="form-control" />
+        <span asp-validation-for="PersonalWebSite" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Teach"></label>

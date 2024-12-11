@@ -18,7 +18,7 @@ public class TeacherController : Controller
         var teachers = _context.Teachers.ToList();
         return View(teachers);
     }
-    public IActionResult ShowDetails(int id)
+    public IActionResult ShowDetails(string id)
     {
         var teacher = _context.Teachers.FirstOrDefault(e => e.Id == id);
         if (teacher == null)
@@ -44,7 +44,7 @@ public class TeacherController : Controller
         _context.SaveChanges();
         return RedirectToAction("Index");
     }
-        public IActionResult Delete(int id)
+        public IActionResult Delete(string id)
     {
         var teacher = _context.Teachers.FirstOrDefault(e => e.Id == id);
         if (teacher == null)
@@ -55,7 +55,7 @@ public class TeacherController : Controller
     }
 
     [HttpPost, ActionName("Delete")]
-    public IActionResult DeleteConfirmed(int id)
+    public IActionResult DeleteConfirmed(string id)
     {
         var teacher = _context.Teachers.FirstOrDefault(e => e.Id == id);
         if (teacher != null)
