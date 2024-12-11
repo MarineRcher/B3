@@ -6,11 +6,37 @@ public class AccountController : Controller
 {
     private readonly SignInManager<Teacher> _signInManager;
     private readonly UserManager<Teacher> _userManager;
+
+    
     public AccountController(SignInManager<Teacher> signInManager, UserManager<Teacher> userManager)
     {
         _signInManager = signInManager;
         _userManager = userManager;
     }
+
+
+    [HttpGet]
+    public IActionResult SignIn()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async  Task<IActionResult> SignIn(AccountViewModel model)
+    {
+        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure:true);
+        if (result.Succeeded)
+        {
+            return RedirectToAction("Index", "Home");
+        } 
+        else
+        {
+            ModelState.AddModelError(string.Empty, "Identifiants incorrect");
+        }
+        return View(model);
+
+    }
+
     [HttpGet]
     public IActionResult Register()
     {
@@ -23,7 +49,6 @@ public class AccountController : Controller
         {
             return View(model);
         }
-        Console.WriteLine("Model valide");
         var user = new Teacher
         {
             UserName = model.Email,
@@ -34,9 +59,7 @@ public class AccountController : Controller
             AdmissionDate = model.AdmissionDate,
             PersonalWebSite = model.PersonalWebSite
         };
-        Console.WriteLine("User :", user);
         var result = await _userManager.CreateAsync(user, model.Password);
-        Console.WriteLine("result : " ,result);
         if (result.Succeeded)
         {
             await _signInManager.SignInAsync(user, isPersistent: false);
