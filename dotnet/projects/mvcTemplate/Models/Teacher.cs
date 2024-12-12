@@ -5,10 +5,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace mvc.Models;
 
-public enum Teach
-{
-    CS, IT, MATHS, OTHERS
-}
 public class Teacher : IdentityUser
 {
     //public int Id{get; set;}
@@ -30,9 +26,8 @@ public class Teacher : IdentityUser
     public DateTime AdmissionDate { get;set;}
 
     [Required(ErrorMessage ="Specialite manquante")]
-    public Teach Teach {get; set;}
+    public Major Major {get; set;}
 
-    [Required]
-    [Url]
-    public string PersonalWebSite {get; set;}
+    public string? PersonalWebSite { get; set; }
+
 }

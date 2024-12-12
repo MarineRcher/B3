@@ -12,6 +12,9 @@ public class EventController : Controller
     }
    public ActionResult Index(string? searchTitle, DateTime? searchDate)
 {
+    var userRole = HttpContext.Session.GetString("UserRole");
+    ViewBag.UserRole = userRole;
+
     var query = _context.Events.AsQueryable();
 
     if (!string.IsNullOrEmpty(searchTitle))
@@ -33,6 +36,8 @@ public class EventController : Controller
 
     public IActionResult ShowDetails(int id)
     {
+        var userRole = HttpContext.Session.GetString("UserRole");
+        ViewBag.UserRole = userRole;
         var eventToShow = _context.Events.FirstOrDefault(e => e.Id == id);
         if (eventToShow == null)
         {

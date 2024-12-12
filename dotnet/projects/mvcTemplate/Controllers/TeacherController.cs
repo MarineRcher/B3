@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using mvc.Models;
 
 namespace mvc.Controllers;
+
+using Microsoft.AspNetCore.Authorization;
 using mvc.Data;
 
 public class TeacherController : Controller
@@ -20,6 +22,8 @@ public class TeacherController : Controller
     }
     public IActionResult ShowDetails(string id)
     {
+        var userRole = HttpContext.Session.GetString("UserRole");
+        ViewBag.UserRole = userRole;
         var teacher = _context.Teachers.FirstOrDefault(e => e.Id == id);
         if (teacher == null)
         {
@@ -27,34 +31,9 @@ public class TeacherController : Controller
         }
         return View(teacher);
     } 
-    public IActionResult Add()
-    {
-        return View();
-    }
+  
 
-    [HttpPost]
-    public IActionResult Add(Teacher teacher)
-    {
-         if (!ModelState.IsValid)
-        {
-            return View();
-        }
-        
-        _context.Teachers.Add(teacher);
-        _context.SaveChanges();
-        return RedirectToAction("Index");
-    }
-        public IActionResult Delete(string id)
-    {
-        var teacher = _context.Teachers.FirstOrDefault(e => e.Id == id);
-        if (teacher == null)
-        {
-            return NotFound();
-        }
-        return View(teacher);
-    }
-
-    [HttpPost, ActionName("Delete")]
+    [HttpPost, ActionName("Delete"), Authorize]
     public IActionResult DeleteConfirmed(string id)
     {
         var teacher = _context.Teachers.FirstOrDefault(e => e.Id == id);

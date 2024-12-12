@@ -3,15 +3,25 @@
 }
 @model IEnumerable<Event> 
 
+@if (!User.Identity.IsAuthenticated){
+    
+
 <div class="text-center">
-            @if (TempData["SuccessMessage"] != null)
+
+    <h1 class="display-4">Bienvienue </h1>
+    <h3>Veuillez vous connecter ou vous inscrire pour acceder aux informations</h3>
+</div>
+}
+    @if (User.Identity.IsAuthenticated){
+        <div class="text-center">
+                        @if (TempData["SuccessMessage"] != null)
 {
     <div class="alert alert-success">
         @TempData["SuccessMessage"]
     </div>
-}
-    <h1 class="display-4">Bienvienue</h1>
-    <h2 class="display-4">Voici les prochains événements :</h2>
+} 
+<h1 class="display-4">Bienvienue</h1>
+    <h3 class="display-8">Voici les prochains événements :</h3>
 
 <table class="table">
         <thead>
@@ -36,3 +46,4 @@
         </tbody>
     </table>
     </div>
+    }

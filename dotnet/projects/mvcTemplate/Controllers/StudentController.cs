@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using mvc.Models;
 using mvc.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
+using Microsoft.AspNetCore.Identity;
 namespace mvc.Controllers;
 
 public class StudentController : Controller
@@ -14,6 +17,7 @@ public class StudentController : Controller
     }
     public ActionResult Index()
     {
+        
         var students = _context.Students.ToList();
         return View(students);
 
@@ -21,6 +25,8 @@ public class StudentController : Controller
 
     public IActionResult ShowDetails(int id)
     {
+        var userRole = HttpContext.Session.GetString("UserRole");
+        ViewBag.UserRole = userRole;
         var student = _context.Students.FirstOrDefault(e => e.Id == id);
         if (student == null)
         {
@@ -29,24 +35,9 @@ public class StudentController : Controller
         return View(student);
     }
 
-    public IActionResult Add()
-    {
-        return View();
-    }
+ 
 
-    [HttpPost]
-    public IActionResult Add(Student student)
-    {
-        if (!ModelState.IsValid)
-        {
-            return View();
-        }
-        
-        _context.Students.Add(student);
-        _context.SaveChanges();
-        TempData["SuccessMessage"] = "L'étudiant a été créé avec succès !";
-        return RedirectToAction("Index");
-    }
+  
     public IActionResult Delete(int id)
     {
         var student = _context.Students.FirstOrDefault(e => e.Id == id);
@@ -57,7 +48,7 @@ public class StudentController : Controller
         return View(student);
     }
 
-    [HttpPost, ActionName("Delete")]
+    [HttpPost, ActionName("Delete"), Authorize]
     public IActionResult DeleteConfirmed(int id)
     {
         var student = _context.Students.FirstOrDefault(e => e.Id == id);

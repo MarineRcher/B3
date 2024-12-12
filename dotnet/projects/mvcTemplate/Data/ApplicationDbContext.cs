@@ -1,11 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using mvc.Models;
 namespace mvc.Data;
 
-// classe qui definit les tables de la bdd
-
-public class ApplicationDbContext : IdentityDbContext<Teacher>
+public class ApplicationDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
 {
     public DbSet<Teacher> Teachers {get; set;}
 
@@ -19,4 +18,10 @@ public class ApplicationDbContext : IdentityDbContext<Teacher>
     {
         
     }
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+
+    }
+
 }

@@ -18,6 +18,7 @@ public class HomeController : Controller
 
     public ActionResult Index()
     {
+        
         var events = _context.Events.Where(e => e.EventDate >= DateTime.Now).ToList();
         return View(events);
 

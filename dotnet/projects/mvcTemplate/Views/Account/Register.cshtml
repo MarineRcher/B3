@@ -38,19 +38,21 @@
                 <span asp-validation-for="Age" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Teach" class="control-label">Matière enseignée</label>
-                <select asp-for="Teach" asp-items="Html.GetEnumSelectList<Teach>()" class="form-control">
+                <label asp-for="Major" class="control-label">Matière enseignée</label>
+                <select asp-for="Major" asp-items="Html.GetEnumSelectList<Major>()" class="form-control">
                     <option value="">Choisissez une option</option>
                 </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="PersonalWebSite" class="control-label">Site web personnel</label>
-                <input asp-for="PersonalWebSite" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="AdmissionDate" class="control-label">Date d'admission</label>
                 <input asp-for="AdmissionDate" type="date" class="form-control" />
                 <span asp-validation-for="AdmissionDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserType" class="control-label">Etes vous une professeur ou une etudiant ?</label>
+                <select asp-for="UserType" asp-items="Html.GetEnumSelectList<UserType>()" class="form-control">
+                    <option value="">Choisissez une option</option>
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="S'inscrire" class="btn btn-primary" />

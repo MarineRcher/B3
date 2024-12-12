@@ -1,4 +1,7 @@
 @model IEnumerable<Event>
+@{
+    var userRole = ViewBag.UserRole;
+}
 
     <div class="text-center">
         @if (TempData["SuccessMessage"] != null)
@@ -12,7 +15,8 @@
             <label for="searchTitle">Titre de l'événement</label>
             <input type="text" name="searchTitle" class="form-control" />
         </div>
-        <div class="form-group">
+        <div class="form-grooccurs because you're trying to access a non-static member (setTextboxText) from a static method (SumData).
+up">
             <label for="searchDate">Date de l'événement</label>
             <input type="date" name="searchDate" class="form-control" />
         </div>
@@ -27,7 +31,7 @@
                 <th>Date</th>
                 <th>Nombre des personnes max</th>
                 <th>Lieu</th>
-               
+            
                 <th>Actions</th>
                 
             </tr>
@@ -43,7 +47,7 @@
                 <td>
                     <a asp-controller="Event" asp-action="ShowDetails" asp-route-id="@evnt.Id">Détails</a
                     >
-                    @if (User.Identity.IsAuthenticated){
+                    @if (User.Identity.IsAuthenticated && @userRole == "Teacher"){
                     <a asp-controller="Event" asp-action="Edit" asp-route-id="@evnt.Id">Modifier</a
                     >
                     }
@@ -54,7 +58,7 @@
         </tbody>
     </table>
     </Event>
-@if (User.Identity.IsAuthenticated){
+@if (User.Identity.IsAuthenticated && @userRole == "Teacher"){
 <a asp-action="Add">Ajouter un événement</a>
 }
 </div>

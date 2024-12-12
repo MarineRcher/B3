@@ -1,5 +1,7 @@
 @model Event
-
+@{
+    var userRole = ViewBag.UserRole;
+}
 <h2>Détails de l'événement</h2>
 
 <dl class="row">
@@ -23,6 +25,6 @@
 </dl>
 
 <a asp-action="Index">Retour à la Liste</a>
-@if (User.Identity.IsAuthenticated){
+@if (User.Identity.IsAuthenticated && userRole == "Teacher"){
 <a asp-action="Delete" asp-route-id="@Model.Id">Supprimer</a>
 }

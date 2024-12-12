@@ -1,12 +1,13 @@
 
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace mvc.Models;
 public enum Major
 {
     CS, IT, MATHS, OTHERS
 }
-public class Student 
+public class Student : IdentityUser
 {
     public int Id{get; set;}
 
@@ -30,5 +31,7 @@ public class Student
     [Required(ErrorMessage = "La spécialité est obligatoire")]
     [Display(Name = "Domaine d'étude")]
     public Major Major { get;set;}
+
+    public string? PersonalWebSite { get; set; }
     
 }
