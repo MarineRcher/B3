@@ -1,4 +1,7 @@
 @model IEnumerable<Teacher>
+    @{
+    var userRole = ViewBag.UserRole;
+}
     <h2>Liste des professeurs</h2>
             @if (TempData["SuccessMessage"] != null)
 {
@@ -26,8 +29,13 @@
                 <td>@teacher.Major</td>
                 <td>@teacher.AdmissionDate</td>
                 <td>
-                    <a asp-controller="teacher" asp-action="ShowDetails" asp-route-id="@teacher.Id">Détails</a
+                    <a asp-controller="Teacher" asp-action="ShowDetails" asp-route-id="@teacher.Id">Détails</a
                     >
+                     @if (User.Identity.IsAuthenticated && @userRole == "Teacher"){
+                    
+                    <a asp-controller="Teacher" asp-action="Edit" asp-route-id="@teacher.Id">Modifier</a
+                    >
+                    }
                 </td>
             </tr>
             }

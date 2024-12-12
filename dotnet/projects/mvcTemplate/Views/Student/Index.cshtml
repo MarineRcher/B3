@@ -1,6 +1,9 @@
 @model IEnumerable<Student>
+@{
+    var userRole = ViewBag.UserRole;
+}
 
-                @if (TempData["SuccessMessage"] != null)
+@if (TempData["SuccessMessage"] != null)
 {
     <div class="alert alert-success">
         @TempData["SuccessMessage"]
@@ -30,6 +33,10 @@
                 <td>
                     <a asp-controller="Student" asp-action="ShowDetails" asp-route-id="@student.Id">Détails</a
                     >
+                     @if (User.Identity.IsAuthenticated && @userRole == "Teacher"){
+                    <a asp-controller="Student" asp-action="Edit" asp-route-id="@student.Id">Modifier</a
+                    >
+                    }
                 </td>
             </tr>
             }

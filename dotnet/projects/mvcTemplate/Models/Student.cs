@@ -10,7 +10,6 @@ public enum Major
 }
 public class Student : IdentityUser
 {
-    public int Id{get; set;}
 
     [Required(ErrorMessage = "Le nom est obligatoire")]
     [StringLength(50, MinimumLength = 2, ErrorMessage = "Le nom doit comporter entre 2 et 50 caractères")]
@@ -34,6 +33,7 @@ public class Student : IdentityUser
     [Display(Name = "Domaine d'étude")]
     public Major Major { get;set;}
 
+    [Url]
     public string? PersonalWebSite { get; set; }
     
 }

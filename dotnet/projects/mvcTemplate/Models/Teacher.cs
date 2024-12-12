@@ -28,6 +28,7 @@ public class Teacher : IdentityUser
     [Required(ErrorMessage ="Specialite manquante")]
     public Major Major {get; set;}
 
+    [Url]
     public string? PersonalWebSite { get; set; }
 
 }
