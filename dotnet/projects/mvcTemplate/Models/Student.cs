@@ -1,4 +1,5 @@
 
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 
@@ -27,7 +28,8 @@ public class Student : IdentityUser
     [Display(Name ="Date d'admission")]
     public DateTime AdmissionDate { get;set;}
     [Display(Name = "Moyenne")]
-    public double GPA { get;set;}
+    
+    public double? GPA { get;set;}
     [Required(ErrorMessage = "La spécialité est obligatoire")]
     [Display(Name = "Domaine d'étude")]
     public Major Major { get;set;}
