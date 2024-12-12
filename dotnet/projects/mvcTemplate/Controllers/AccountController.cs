@@ -29,37 +29,39 @@ public class AccountController : Controller
     }
 
 
-    [HttpGet]
     public IActionResult SignIn()
     {
         return View();
     }
 
     [HttpPost]
-    public async  Task<IActionResult> SignIn(AccountViewModel model)
+    public async  Task<IActionResult> SignIn(LoginViewModel model)
     {
-        var user = await _userManager.FindByEmailAsync(model.Email);
-        if (user == null)
-        {
-            TempData["errorMessage"] =  "Utilisateur non trouvé";
-            return View(model);
-        } 
-        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure:true);
-        if (result.Succeeded)
-        {
-            var userRole = await _userManager.GetRolesAsync(user);
-            if (userRole.Any())
+        if (ModelState.IsValid){
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
             {
-                HttpContext.Session.SetString("UserRole", string.Join(",", userRole));
-                TempData["SuccessMessage"] = "Vous vous êtes connecté avec succès !";
-                return RedirectToAction("Index", "Home");
-            } else {
+                TempData["ErrorMessage"] =  "Utilisateur non trouvé";
+                return View(model);
+            } 
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure:true);
+            if (result.Succeeded)
+            {
+                var userRole = await _userManager.GetRolesAsync(user);
+                if (userRole.Any())
+                {
+                    HttpContext.Session.SetString("UserRole", string.Join(",", userRole));
+                    TempData["SuccessMessage"] = "Vous vous êtes connecté avec succès !";
+                    return RedirectToAction("Index", "Home");
+                } else {
+                    return View(model);
+                }
+            } 
+            else
+            {
+                TempData["ErrorMessage"]="Mot de passe incorrect";
                 return View(model);
             }
-        } 
-        else
-        {
-            TempData["ErrorMessage"]="Identifiants incorrect";
         }
         return View(model);
 

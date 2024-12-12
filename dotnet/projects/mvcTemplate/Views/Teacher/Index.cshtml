@@ -9,7 +9,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Prenom</th>
                 <th>Nom de famille</th>
                 <th>Âge</th>
@@ -21,7 +20,6 @@
         <tbody>
             @foreach (var teacher in Model) {
             <tr>
-                <td>@teacher.Id</td>
                 <td>@teacher.Firstname</td>
                 <td>@teacher.Lastname</td>
                 <td>@teacher.Age</td>
@@ -35,4 +33,4 @@
             }
         </tbody>
     </table>
-    </Etudiant>
+    </Teacher>
