@@ -20,7 +20,7 @@ builder.Services.AddIdentity<Teacher, IdentityRole>(options=>{
     options.Password.RequiredLength = 8;
     options.User.RequireUniqueEmail = true;
 
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
     options.Lockout.MaxFailedAccessAttempts = 5;
     options.Lockout.AllowedForNewUsers = true;
 
@@ -29,6 +29,13 @@ builder.Services.AddIdentity<Teacher, IdentityRole>(options=>{
 
 }).AddEntityFrameworkStores<ApplicationDbContext>();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.Name = ".mvc.Identity.Cookies";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+});
 
 var app = builder.Build();
 

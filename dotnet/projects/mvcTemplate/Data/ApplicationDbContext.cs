@@ -11,6 +11,8 @@ public class ApplicationDbContext : IdentityDbContext<Teacher>
 
     public DbSet<Student> Students {get; set;}
 
+    public DbSet<Event> Events {get; set;}
+
     //constructeur
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)

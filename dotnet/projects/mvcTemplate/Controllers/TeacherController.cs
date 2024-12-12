@@ -60,6 +60,7 @@ public class TeacherController : Controller
         var teacher = _context.Teachers.FirstOrDefault(e => e.Id == id);
         if (teacher != null)
         {
+            TempData["SuccessMessage"] = "Le professeur a été supprimé avec succès !";
             _context.Teachers.Remove(teacher);
             _context.SaveChanges();
             

@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using mvc.Data;
 using mvc.Models;
 
 namespace mvc.Controllers;
@@ -8,15 +9,19 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    private readonly ApplicationDbContext _context;
+    public HomeController(ApplicationDbContext context)
     {
-        _logger = logger;
+        _context = context;
+    
     }
 
-    public IActionResult Index()
+    public ActionResult Index()
     {
-        return View();
-    }
+        var events = _context.Events.Where(e => e.EventDate >= DateTime.Now).ToList();
+        return View(events);
+
+    } 
 
     public IActionResult Privacy()
     {

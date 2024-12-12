@@ -1,4 +1,10 @@
 @model AccountViewModel
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
         <h2>S'inscrire</h2>
         <form asp-action="Register">
             <div class="form-group">

@@ -1,7 +1,38 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model IEnumerable<Event> 
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-</div>
+            @if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+    <h1 class="display-4">Bienvienue</h1>
+    <h2 class="display-4">Voici les prochains événements :</h2>
+
+<table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Date</th>
+                <th>Nombre des personnes max</th>
+                <th>Lieu</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var evnt in Model) {
+            <tr>
+                <td>@evnt.Title</td>
+                <td>@evnt.EventDate</td>
+                <td>@evnt.MaxParticipants</td>
+                <td>@evnt.Location</td>
+             
+            </tr>
+            }
+        </tbody>
+    </table>
+    </div>

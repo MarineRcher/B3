@@ -44,6 +44,7 @@ public class StudentController : Controller
         
         _context.Students.Add(student);
         _context.SaveChanges();
+        TempData["SuccessMessage"] = "L'étudiant a été créé avec succès !";
         return RedirectToAction("Index");
     }
     public IActionResult Delete(int id)
@@ -65,6 +66,7 @@ public class StudentController : Controller
             _context.Students.Remove(student);
             _context.SaveChanges();
         }
+        TempData["SuccessMessage"] = "L'étudiant a été supprimé avec succès !";
         return RedirectToAction(nameof(Index));
     }
 }

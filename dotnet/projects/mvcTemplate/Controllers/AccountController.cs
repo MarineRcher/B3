@@ -13,6 +13,13 @@ public class AccountController : Controller
         _signInManager = signInManager;
         _userManager = userManager;
     }
+    
+    [HttpPost]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
+    }
 
 
     [HttpGet]
@@ -27,6 +34,7 @@ public class AccountController : Controller
         var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure:true);
         if (result.Succeeded)
         {
+            TempData["SuccessMessage"] = "Vous vous êtes connecté avec succès !";
             return RedirectToAction("Index", "Home");
         } 
         else
@@ -63,6 +71,7 @@ public class AccountController : Controller
         if (result.Succeeded)
         {
             await _signInManager.SignInAsync(user, isPersistent: false);
+            TempData["SuccessMessage"] = "Votre compte a été créé avec succès !";
             return RedirectToAction("Index", "Home");
         }
         foreach (var error in result.Errors)
