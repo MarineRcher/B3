@@ -1,64 +1,80 @@
-@model IEnumerable<Event>
+@model EventIndexViewModel
 @{
     var userRole = ViewBag.UserRole;
 }
 
-    <div class="text-center">
-        @if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["SuccessMessage"]
-    </div>
-}
-    <form asp-action="Index" method="get">
-        <div class="form-group">
-            <label for="searchTitle">Titre de l'événement</label>
-            <input type="text" name="searchTitle" class="form-control" />
+<div class="text-center">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
         </div>
-        <div class="form-grooccurs because you're trying to access a non-static member (setTextboxText) from a static method (SumData).
-up">
-            <label for="searchDate">Date de l'événement</label>
-            <input type="date" name="searchDate" class="form-control" />
-        </div>
-        <button type="submit" class="btn btn-primary">Rechercher</button>
-    </form>
-    <h2>Liste des événements</h2>
+    }
 
-    <table class="table">
-        <thead>
+    <form asp-action="Index" method="get">
+        <div class="row g-3">
+        <div class="col-md-4">
+            <label for="searchTitle">Titre de l'événement</label>
+            <input type="text" name="searchTitle" value="@Model.SearchTitle" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            <label for="searchDate">Date de l'événement</label>
+            <input type="date" name="searchDate" value="@(Model.SearchDate?.ToString("yyyy-MM-dd"))" class="form-control" />
+        </div>
+        <div class="col-md-2 align-self-end">
+                <button type="submit" class="btn btn-primary w-100">Rechercher</button>
+        </div>
+        </div>
+    </form>
+
+    <h2>Liste des événements</h2>
+    @if (User.Identity.IsAuthenticated && userRole == "Teacher")
+    {
+        <a asp-action="Add" class="btn btn-success">Ajouter un événement</a>
+    }
+    <table class="table table-striped table-hover mt-4">
+        <thead class="table-primary">
             <tr>
                 <th>Nom</th>
                 <th>Date</th>
                 <th>Nombre des personnes max</th>
                 <th>Lieu</th>
-            
                 <th>Actions</th>
-                
             </tr>
         </thead>
         <tbody>
-            @foreach (var evnt in Model) {
-            <tr>
-                <td>@evnt.Title</td>
-                <td>@evnt.EventDate</td>
-                <td>@evnt.MaxParticipants</td>
-                <td>@evnt.Location</td>
-                
-                <td>
-                    <a asp-controller="Event" asp-action="ShowDetails" asp-route-id="@evnt.Id">Détails</a
-                    >
-                    @if (User.Identity.IsAuthenticated && @userRole == "Teacher"){
-                    <a asp-controller="Event" asp-action="Edit" asp-route-id="@evnt.Id">Modifier</a
-                    >
-                    }
-                </td>
-                
-            </tr>
+            @foreach (var evnt in Model.Events)
+            {
+                <tr>
+                    <td>@evnt.Title</td>
+                    <td>@evnt.EventDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@evnt.MaxParticipants</td>
+                    <td>@evnt.Location</td>
+                    
+                    <td>
+                        <a asp-controller="Event" asp-action="ShowDetails" asp-route-id="@evnt.Id" class="btn btn-info btn-sm me-2"><i class="bi bi-eye"> Détails</a>
+                        @if (User.Identity.IsAuthenticated && userRole == "Teacher")
+                        {
+                            <a asp-controller="Event" asp-action="Edit" asp-route-id="@evnt.Id" class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Modifier</a>
+                        }
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
-    </Event>
-@if (User.Identity.IsAuthenticated && @userRole == "Teacher"){
-<a asp-action="Add">Ajouter un événement</a>
-}
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("Index", new { page = i, searchTitle = Model.SearchTitle, searchDate = Model.SearchDate })">
+                        @i
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+
+    
 </div>

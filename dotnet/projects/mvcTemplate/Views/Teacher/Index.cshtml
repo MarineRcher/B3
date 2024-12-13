@@ -9,8 +9,8 @@
         @TempData["SuccessMessage"]
     </div>
 }
-    <table class="table">
-        <thead>
+    <table class="table table-striped table-hover mt-4">
+        <thead class="table-primary">
             <tr>
                 <th>Prenom</th>
                 <th>Nom de famille</th>
@@ -29,11 +29,11 @@
                 <td>@teacher.Major</td>
                 <td>@teacher.AdmissionDate</td>
                 <td>
-                    <a asp-controller="Teacher" asp-action="ShowDetails" asp-route-id="@teacher.Id">Détails</a
+                    <a asp-controller="Teacher" asp-action="ShowDetails" asp-route-id="@teacher.Id" class="btn btn-info btn-sm me-2">Détails</a
                     >
                      @if (User.Identity.IsAuthenticated && @userRole == "Teacher"){
                     
-                    <a asp-controller="Teacher" asp-action="Edit" asp-route-id="@teacher.Id">Modifier</a
+                    <a asp-controller="Teacher" asp-action="Edit" asp-route-id="@teacher.Id" class="btn btn-warning btn-sm">Modifier</a
                     >
                     }
                 </td>

@@ -39,6 +39,9 @@ Les étudiant peuvent :
 - Voir, ajouter un étudiant
 - Voir, ajouter un professeur
 
+Bonus :
+- Pagination pour les evennements
+
 ## Diagramme de classes
 
 ```mermaid
@@ -108,6 +111,14 @@ classDiagram
         +string Email
         +string Password
     }
+
+    class EventsViewModel {
+        +list Events
+        +int CurrentPage
+        +int TotalPages
+        +string SearchTitle
+        +datetime SearchDate
+    }
     
     class ApplicationDbContext {
         +DbSet~Teacher~ Teachers
@@ -123,6 +134,7 @@ classDiagram
     Teacher ..> Major : utilise
     AccountViewModel ..> UserType : utilise
     AccountViewModel ..> Major : utilise
+    EventsViewModel ..> Event : utilise
     ApplicationDbContext --> Student : contient
     ApplicationDbContext --> Teacher : contient
     ApplicationDbContext --> Event : contient

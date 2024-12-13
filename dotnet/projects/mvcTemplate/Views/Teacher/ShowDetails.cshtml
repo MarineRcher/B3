@@ -22,7 +22,7 @@
     <dd class="col-sm-10">@Model.Major</dd>
 </dl>
 
-<a asp-action="Index">Retour à la Liste</a>
+<a asp-action="Index" class="btn btn-secondary">Retour à la Liste</a>
 @if (User.Identity.IsAuthenticated && @userRole == "Teacher"){
-<a asp-action="Delete" asp-route-id="@Model.Id">Supprimer</a>
+<a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Supprimer</a>
 }

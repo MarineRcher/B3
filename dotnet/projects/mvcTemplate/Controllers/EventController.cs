@@ -4,13 +4,14 @@ using mvc.Models;
 using Microsoft.AspNetCore.Authorization;
 public class EventController : Controller
 {
+    private const int PageSize = 5;
     private readonly ApplicationDbContext _context;
     public EventController(ApplicationDbContext context)
     {
         _context = context;
     
     }
-   public ActionResult Index(string? searchTitle, DateTime? searchDate)
+   public ActionResult Index(string? searchTitle, DateTime? searchDate, int page = 1)
 {
     var userRole = HttpContext.Session.GetString("UserRole");
     ViewBag.UserRole = userRole;
@@ -27,9 +28,24 @@ public class EventController : Controller
         query = query.Where(e => e.EventDate >= searchDate.Value);
     }
 
-    var events = query.ToList();
+    query = query.OrderByDescending(e => e.CreatedAt);
 
-    return View(events);
+        
+    int totalEvents = query.Count();
+    int totalPages = (int)Math.Ceiling((double)totalEvents / PageSize);
+
+    var events = query.Skip((page - 1) * PageSize).Take(PageSize).ToList();
+    var viewModel = new EventIndexViewModel
+            {
+                Events = events,
+                CurrentPage = page,
+                TotalPages = totalPages,
+                SearchTitle = searchTitle,
+                SearchDate = searchDate
+            };
+
+            return View(viewModel);
+
 }
 
 

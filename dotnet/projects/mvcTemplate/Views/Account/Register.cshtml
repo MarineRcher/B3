@@ -5,58 +5,68 @@
         @TempData["SuccessMessage"]
     </div>
 }
-        <h2>S'inscrire</h2>
-        <form asp-action="Register">
-            <div class="form-group">
-                <label asp-for="Email" class="control-label">Email</label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="text-center mb-0">S'inscrire</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Register">
+                        <div class="mb-3">
+                            <label asp-for="Email" class="control-label">Email</label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Password" class="control-label">Mot de passe</label>
+                            <input asp-for="Password" type="password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="ConfirmedPassword" class="control-label">Confirmer le mot de passe</label>
+                            <input asp-for="ConfirmedPassword" type="password" class="form-control" />
+                            <span asp-validation-for="ConfirmedPassword" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Firstname" class="control-label">Prénom</label>
+                            <input asp-for="Firstname" class="form-control" />
+                            <span asp-validation-for="Firstname" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Lastname" class="control-label">Nom de famille</label>
+                            <input asp-for="Lastname" class="form-control" />
+                            <span asp-validation-for="Lastname" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Age" class="control-label">Âge</label>
+                            <input asp-for="Age" class="form-control" />
+                            <span asp-validation-for="Age" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Major" class="control-label">Spécialité</label>
+                            <select asp-for="Major" asp-items="Html.GetEnumSelectList<Major>()" class="form-control">
+                                <option value="">Choisissez une option</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="AdmissionDate" class="control-label">Date d'admission</label>
+                            <input asp-for="AdmissionDate" type="date" class="form-control" />
+                            <span asp-validation-for="AdmissionDate" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="UserType" class="control-label">Etes vous professeur(e) ou etudiant(e) ?</label>
+                            <select asp-for="UserType" asp-items="Html.GetEnumSelectList<UserType>()" class="form-control">
+                                <option value="">Choisissez une option</option>
+                            </select>
+                        </div>
+                        <div class="d-grid">
+                            <input type="submit" value="S'inscrire" class="btn btn-primary" />
+                        </div>
+                    </form>
+                 </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label">Mot de passe</label>
-                <input asp-for="Password" type="password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmedPassword" class="control-label">Confirmer le mot de passe</label>
-                <input asp-for="ConfirmedPassword" type="password" class="form-control" />
-                <span asp-validation-for="ConfirmedPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Firstname" class="control-label">Prénom</label>
-                <input asp-for="Firstname" class="form-control" />
-                <span asp-validation-for="Firstname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Lastname" class="control-label">Nom de famille</label>
-                <input asp-for="Lastname" class="form-control" />
-                <span asp-validation-for="Lastname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Age" class="control-label">Âge</label>
-                <input asp-for="Age" class="form-control" />
-                <span asp-validation-for="Age" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Major" class="control-label">Spécialité</label>
-                <select asp-for="Major" asp-items="Html.GetEnumSelectList<Major>()" class="form-control">
-                    <option value="">Choisissez une option</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="AdmissionDate" class="control-label">Date d'admission</label>
-                <input asp-for="AdmissionDate" type="date" class="form-control" />
-                <span asp-validation-for="AdmissionDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserType" class="control-label">Etes vous professeur(e) ou etudiant(e) ?</label>
-                <select asp-for="UserType" asp-items="Html.GetEnumSelectList<UserType>()" class="form-control">
-                    <option value="">Choisissez une option</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="S'inscrire" class="btn btn-primary" />
-            </div>
-        </form>
-
-
+        </div>
+    </div>
+</div>

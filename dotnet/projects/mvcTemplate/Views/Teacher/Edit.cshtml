@@ -8,32 +8,32 @@
 <h2>Modifier un professeur</h2>
 
 <form asp-action="Edit">
-    <div class="form-group">
+    <div class="mb-3">
         <label asp-for="Firstname"></label>
         <input asp-for="Firstname" class="form-control" />
         <span asp-validation-for="Firstname" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    <div class="mb-3">
         <label asp-for="Lastname"></label>
         <input asp-for="Lastname" class="form-control" />
         <span asp-validation-for="Lastname" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    <div class="mb-3">
         <label asp-for="Age"></label>
         <input asp-for="Age" class="form-control" />
         <span asp-validation-for="Age" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    <div class="mb-3">
         <label asp-for="AdmissionDate"></label>
         <input asp-for="AdmissionDate" class="form-control" />
         <span asp-validation-for="AdmissionDate" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    <div class="mb-3">
         <label asp-for="PersonalWebSite"></label>
         <input asp-for="PersonalWebSite" class="form-control" />
         <span asp-validation-for="PersonalWebSite" class="text-danger"></span>
     </div>
-   <div class="form-group">
+   <div class="mb-3">
     <label asp-for="Major"></label>
     <select asp-for="Major" asp-items="Html.GetEnumSelectList<Major>()" class="form-control">
         <option value="">Sélectionnez un choix</option>
@@ -43,4 +43,4 @@
     <button type="submit" class="btn btn-primary">Modifier</button>
 </form>
 
-<a asp-action="Index">Retour à la Liste</a>
+<a asp-action="Index" class="btn btn-secondary">Retour à la Liste</a>
