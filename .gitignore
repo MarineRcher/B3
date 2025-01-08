@@ -6,6 +6,8 @@
 .venv/
 eleves/
 __pycache__/
+migrations/
+static/images/
 # Fichiers de build et répertoires
 bin/
 obj/

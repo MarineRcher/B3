@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Mon template</title>
+    </head>
+    <body>
+        {%load static%}
+        <h1>Mon template</h1>
+        <p>Welcome to the home page.</p>
+        <p>Bonjour {{prenom}} sur ma page de blog</p>
+        <img with="100px" src="{% static 'monimage.png' %}" >
+        <h2> Liste de montres</h2>
+        <ul>
+            {% for montre in montres %}
+                <li>{{ montre}}</li>
+            {% endfor %}
+        </ul>
+        {% if age > 18 %}
+            <p>Vous êtes majeur</p>
+        {% else %}
+            <p>Vous êtes mineur {{age}}</p>
+        {% endif %}
+
+        {% for blogpage in lstBlogPages %}
+            <img width="100px" src="{{ blogpage.image.url }}" alt="{{blogpage.title}}">
+            <h3>{{blogpage.title}} - {{blogpage.fk_category}}</h3>
+            <p>{{blogpage.content}}</p>
+            {% for tagelement in blogpage.tagList.all %}
+                #{{tagelement}} 
+            {%endfor%}
+    
+            <hr>
+        {% endfor %}
+    </body>
+</html>

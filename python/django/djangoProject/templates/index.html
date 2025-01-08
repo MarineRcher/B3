@@ -1,0 +1,33 @@
+{% load static %}
+<html>
+    <head>
+        <title>Mon template</title>
+    </head>
+    <body>
+        {% if age >= 18 %}
+            <h1> Mon template </h1>
+            <p> Bienvenu sur ma page de blog {{prenom }} </p>
+            {% if blogs %}
+                <h1>Les articles</h1>
+                {% for blog in blogs %}
+                    <img width=100px src="{{blog.image.url}}" 
+                        alt="{{blog.title}}" />
+                    <p>{{blog.title}} - {{blog.content}}</p>
+                    {% if blog.tag.all %}
+                    <h3>Tags</h3>
+                        {% for tag in blog.tag.all %}
+                            <li>{{tag.title}}</li>
+                        {% endfor %}
+                    {% endif %}
+                    {% if blog.category %}
+                        <h3>Categorie : {{blog.category.title}}</h3>
+                    {% endif %}
+                    <hr>
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            <h1>Vous n'etes pas autorise</h1>
+        {% endif %}
+    
+    </body>
+</html>
