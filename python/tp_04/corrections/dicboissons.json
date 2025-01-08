@@ -1,0 +1,8 @@
+{
+    "cafe noir": { "numero": 1, "prix": 15 },
+    "cafe au lait": { "numero": 2, "prix": 25 },
+    "the": { "numero": 3, "prix": 20 },
+    "chocolat au lait": { "numero": 4, "prix": 35 },
+    "cappucino": { "numero": 5, "prix": 40 },
+    "cafe long": { "numero": 6, "prix": 20 }
+}

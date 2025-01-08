@@ -1,5 +1,5 @@
 import json
-
+import os
 import tp_02
 
 dicStudents = {
@@ -11,8 +11,9 @@ dicStudents = {
 }
 
 while True:
-    with open("listeleves.json", "r") as file:
-        dicStudents = json.load(file)
+    if os.path.existe("listeleves.json"):
+        with open("listeleves.json", "r") as file:
+            dicStudents = json.load(file)
     input_user = input("Saisir une option : ")
 
     if input_user.lower() == "quitter":
