@@ -38,3 +38,4 @@ print(nombre_clients)
 villes = partDf.groupby(["Document - Ville (facturation)"])
 for ville in villes.item():
     print(villes)
+partDf["Total_TTC"] = partDf["Total_TTC"].str.replace(",", ".").asType(float)
