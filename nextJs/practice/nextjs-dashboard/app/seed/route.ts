@@ -98,7 +98,8 @@ async function seedRevenue() {
 
 export async function GET() {
     try {
-        const result = await sql.begin((sql) => [
+        // Since we're not using the result, we can just call the functions
+        await Promise.all([
             seedUsers(),
             seedCustomers(),
             seedInvoices(),
