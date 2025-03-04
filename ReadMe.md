@@ -1,5 +1,5 @@
 # Gestion de projets
 
-## NextJs
+## Mongodb
 
-Le projet nextjs se trouve dans `nextJs/practice/nextjs-dashboard`
+Le tp mongodb se trouve dans `mongodb/tp/jour1`
