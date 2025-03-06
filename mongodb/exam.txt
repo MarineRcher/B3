@@ -1,0 +1,128 @@
+La collection `produits` contenant 200 000 documents présente des requêtes lentes. L'exécution de `db.produits.find({ categorie: "électronique", prix: { $gt: 300 } }).sort({ date_ajout: -1 })` prend 4 secondes.
+a) Identifiez le problème probable.
+b) Écrivez l'index optimal à créer pour cette requête spécifique et justifiez l'ordre des champs.
+c) Comment vérifieriez-vous que votre index est effectivement utilisé ?
+(4 points)
+
+
+
+a) Le problème vient du type de scan qui est COLLSCAN, il va chercher dans tous les documents. La solution est d'ajouter un index pour le que le type de scan soit IXSCAN et pointe directement vers les documents concernes.
+
+b) L'index est `db.produits.createIndex({categorie: 1, prix: 1, date_ajout: -1 })`
+
+c) On verifie en faisant la meme requete avec `.explain("executionStats")`, les documents analyses seront moins eleves, et le type de scan devient IXSCAN.
+
+
+
+
+
+2) Voici une partie d'un pipeline d'agrégation. Identifiez et corrigez les 3 erreurs ou mauvaises pratiques : (cf annexe au sujet)
+
+db.commandes.aggregate([
+ { $match: { statut: "expédiée" } },
+ { $sort: { date: -1 } },
+ { $group: {
+ _id: "$client_id",
+ commandes: { $push: "$ROOT" },
+ total: { $add: "$montant" }
+ }
+ },
+ { $match: { total: { $gt: 1000 } } },
+ { $limit: 100 }
+])
+
+Pour additionner, on n'utilise pas `$add` mais `$sum`. add permet d'addictionner des conditions dans le retour de find().
+`$sort` doit apparaitre a la fin, car on creer le resultat avant de penser a son rendu. C'est pour cela que sort ou limit se trouvent a la fin.
+On va plutot utiliser `$addToSet` a la place de `$push` pour avoir des valeurs uniques.
+Voici le rendu :
+
+`db.commandes.aggregate([
+ { $match: { statut: "expédiée" } },
+ { $group: {
+ _id: "$client_id",
+ commandes: { $addToSet: "$ROOT" },
+ total: { $sum: "$montant" }
+ }
+ },
+ { $match: { total: { $gt: 1000 } } },
+ { $sort: { date: -1 } },
+ { $limit: 100 }
+])`
+
+3)a) 
+`
+db.restaurant.insertOne({
+        nom: "restaurant Lyon",
+      "localisation": {
+        "coordinates": [
+          [
+            [
+              4.837857826856663,
+              45.748419112566495
+            ],
+            [
+              4.834198635823327,
+              45.748419112566495
+            ],
+            [
+              4.834198635823327,
+              45.746354985024
+            ],
+            [
+              4.837857826856663,
+              45.746354985024
+            ],
+            [
+              4.837857826856663,
+              45.748419112566495
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      
+    }
+})
+`
+
+b)
+`
+db.restaurant.find({localisation: {
+    $near: {
+      $geometry: {
+        type: "Point",
+        coordinates:[2.3508, 48.8567]
+      },
+      $maxDistance: 5000,  
+      $minDistance: 100   
+    }
+  }})
+`
+c) db.restaurant.createIndex("restaurant.localisation": "2dsphere")
+
+4) 
+Le choix du modele B est plus judicieux, car en grande quantite il peut etre plus difficile de contenir les commentaires dans les articles.
+Les requetes seront moins complexes et plus efficaces car on peut creer un index specifiquement pour les commentaires et d'autres pour les articles.
+
+
+
+
+Écrivez un pipeline d'agrégation pour obtenir :
+- Le nombre total de ventes par mois pour l'année 2023
+- Le montant moyen des ventes pour chaque mois
+- Triés par mois chronologiquement
+Votre pipeline doit extraire le mois à partir du champ `date_vente` (ISODate ou String).
+(3 points)
+
+db.ventes.aggregate({
+    { $match: { 
+    date: { $gte: new Date("2023-01-01") } 
+  }},
+   $group{
+    _id: {mois: { $month: "$date" }},
+    nombre_vente: {$sum: 1},
+    montant_moyen: {$avg: "$montant"}
+   }, $sort{
+    "_id.mois": 1
+   }
+})
+

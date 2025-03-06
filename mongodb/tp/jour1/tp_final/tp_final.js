@@ -1,12 +1,13 @@
 //Partie 1
 //  Creer bdd
-// use bibliotheque_amazon
+use bibliotheque_amazon;
 
 // Ajout livres
 db.createCollection("livres");
 
 db.livres.insertMany([
     {
+        _id: ObjectId("l1"),
         titre: "Le Petit Prince",
         auteur: "Antoine de Saint-Exupéry",
         annee_publication: 1943,
@@ -24,6 +25,7 @@ db.livres.insertMany([
         date_ajout: new Date("2023-01-15"),
     },
     {
+        _id: ObjectId("l2"),
         titre: "L'Étranger",
         auteur: "Albert Camus",
         annee_publication: 1942,
@@ -41,6 +43,7 @@ db.livres.insertMany([
         date_ajout: new Date("2023-02-10"),
     },
     {
+        _id: ObjectId("l3"),
         titre: "Voyage au bout de la nuit",
         auteur: "Louis-Ferdinand Céline",
         annee_publication: 1932,
@@ -58,6 +61,7 @@ db.livres.insertMany([
         date_ajout: new Date("2023-01-27"),
     },
     {
+        _id: ObjectId("l4"),
         titre: "Les Misérables",
         auteur: "Victor Hugo",
         annee_publication: 1862,
@@ -75,6 +79,7 @@ db.livres.insertMany([
         date_ajout: new Date("2022-11-05"),
     },
     {
+        _id: ObjectId("l5"),
         titre: "Notre-Dame de Paris",
         auteur: "Victor Hugo",
         annee_publication: 1831,
@@ -92,6 +97,7 @@ db.livres.insertMany([
         date_ajout: new Date("2023-03-20"),
     },
     {
+        _id: ObjectId("l6"),
         titre: "Une chambre à soi",
         auteur: "Virginia Wolf",
         annee_publication: 1929,
@@ -109,6 +115,7 @@ db.livres.insertMany([
         date_ajout: new Date("2023-01-20"),
     },
     {
+        _id: ObjectId("l7"),
         titre: "King kong theorie",
         auteur: "Virginie Despentes",
         annee_publication: 2007,
@@ -143,7 +150,7 @@ db.utilisateurs.insertMany([
         date_inscription: new Date("2022-12-10"),
         livres_empruntes: [
             {
-                livre_id: ObjectId("67c6d2883fcd1b257451e94b"),
+                livre_id: ObjectId("l1"),
                 titre: "Le Petit Prince",
                 date_emprunt: new Date("2023-02-15"),
                 date_retour_prevue: new Date("2023-03-15"),
@@ -164,13 +171,13 @@ db.utilisateurs.insertMany([
         date_inscription: new Date("2022-12-10"),
         livres_empruntes: [
             {
-                livre_id: ObjectId("67c6d2883fcd1b257451e94e"),
+                livre_id: ObjectId("l4"),
                 titre: "Les Misérables",
                 date_emprunt: new Date("2023-02-23"),
                 date_retour_prevue: new Date("2023-03-23"),
             },
             {
-                livre_id: ObjectId("67c6d2883fcd1b257451e94d"),
+                livre_id: ObjectId("l3"),
                 titre: "Voyage au bout de la nuit",
                 date_emprunt: new Date("2023-02-23"),
                 date_retour_prevue: new Date("2023-03-23"),
@@ -191,19 +198,19 @@ db.utilisateurs.insertMany([
         date_inscription: new Date("2022-12-10"),
         livres_empruntes: [
             {
-                livre_id: ObjectId("67c6d2883fcd1b257451e94f"),
+                livre_id: ObjectId("l5"),
                 titre: "Notre-Dame de Paris",
                 date_emprunt: new Date("2023-02-09"),
                 date_retour_prevue: new Date("2023-03-09"),
             },
             {
-                livre_id: ObjectId("67c6d2883fcd1b257451e94c"),
+                livre_id: ObjectId("l2"),
                 titre: "L'Étranger",
                 date_emprunt: new Date("2023-02-10"),
                 date_retour_prevue: new Date("2023-03-10"),
             },
             {
-                livre_id: ObjectId("67c6d2883fcd1b257451e94b"),
+                livre_id: ObjectId("l1"),
                 titre: "Le Petit Prince",
                 date_emprunt: new Date("2023-02-10"),
                 date_retour_prevue: new Date("2023-03-10"),
@@ -329,55 +336,3 @@ db.livres.find({ titre: { $regex: /soi/ } });
 // 7. Trouvez les livres dont le prix est entre 10€ et 20€
 db.livres.find({ prix: { $lt: 20, $gt: 10 } });
 
-// Partie 6
-//creer collection
-db.createCollection("emprunts");
-// creer 3 emprunts
-db.emprunt.insertMany([
-    {
-        utilisateur_id: ObjectId("67c6d3463fcd1b257451e954"),
-        livre_id: ObjectId("67c6d2883fcd1b257451e951"),
-        date_emprunt: new Date("2023-02-20"),
-        date_retour_prevue: new Date("2023-03-20"),
-        date_retour_effective: null,
-        statut: "en cours",
-    },
-    {
-        utilisateur_id: ObjectId("67c6d3463fcd1b257451e954"),
-        livre_id: ObjectId("67c6d2883fcd1b257451e950"),
-        date_emprunt: new Date("2023-01-20"),
-        date_retour_prevue: new Date("2023-02-20"),
-        date_retour_effective: null,
-        statut: "retourné",
-    },
-    {
-        utilisateur_id: ObjectId("67c6d3463fcd1b257451e952"),
-        livre_id: ObjectId("67c6d2883fcd1b257451e950"),
-        date_emprunt: new Date("2023-01-20"),
-        date_retour_prevue: new Date("2023-02-20"),
-        date_retour_effective: null,
-        statut: "en retard",
-    },
-]);
-
-// Comparez cette approche avec celle où les emprunts sont directement intégrés dans le document utilisateur
-// Cette approche est flexible, si on change le titre du livre par exemple, on n'aura pas à le changer dans livres_empruntes des utilisateurs.
-
-// 1. Quels sont les avantages et inconvénients de chaque approche ?
-// Approche avec emprunts dans les utilisateurs :
-// avantages : L'accès aux livres empruntés plus rapide avec une requête plus simple.
-// Inconvénients : Peu flexible (Si le titre est modifié, il faut le changer dans 2 champs.)
-// Pour des requêtes sur l'ensemble des emprunts, cela devient vite une contrainte
-// Approche avec les références :
-// avantages : pas de duplication de données, meilleure modélisation, plus simple de faire des
-// requetes sur l'ensemble des emprunts
-// Inconvénients : requêtes plus complexes
-
-// 2. Quelle approche privilégieriez-vous pour une application réelle et pourquoi ?
-// On va privilégier l'approche avec les références, car c'est mieux maintenable, plus facile.
-// d'accès a l'ensemble des données, que ce soit pour envoyer un mail aux emprunts en retard
-// ou récupère le nombre de livres empruntés dans le mois.
-
-// 3. Comment modéliseriez-vous les cas où un même livre peut exister en plusieurs exemplaires ?
-// On va faire comme emprunts, en créant une nouvelle collection avec pour référence le livre
-// on ajoute des champs comme disponible, son état, son emplacement. Ensuite, dans la collection emprunt, on change l'objet du livre par celui de l'exemplaire.
