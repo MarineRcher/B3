@@ -5,7 +5,8 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 # dependencies
-*/node_modules
+blockchain/tp-implementation-blockchain/node_modules/
+/node_modules
 /.pnp
 .pnp.js
 
