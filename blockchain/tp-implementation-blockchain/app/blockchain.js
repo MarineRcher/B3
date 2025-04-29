@@ -42,7 +42,7 @@ class Blockchain {
         if (!Blockchain.isValidChain(chain)) {
             return;
         }
-        if (chain.lenght < this.chain.lenght) {
+        if (chain.length < this.chain.length) {
             return;
         }
         this.chain = chain;
