@@ -8,7 +8,7 @@ class P2PServer {
     }
 
     listen() {
-        const ws = new WebSocket.Server({ port: 5000 });
+        const ws = new WebSocket.Server({ port: 5005 });
 
         ws.on("connection", (socket) => this.connectSocket(socket));
         this.connectToPeers();
