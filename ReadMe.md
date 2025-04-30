@@ -2,4 +2,7 @@
 
 ## Blockchain
 
-Pour le tp, il se trouve dans `blockchain/tp-implementation-blockchain`
+TP
+
+-   TP - Implémentation d'une blockchain : Dans `blockchain/tp-implementation-blockchain`
+-   TP - Déployer un smart contract sur Ethereum : Dans `blockchain/tp-etherum/hello-world`
