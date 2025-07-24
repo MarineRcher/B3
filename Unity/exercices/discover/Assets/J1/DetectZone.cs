@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DetectZOne : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other)
+    void rEnter(Collider other)
     {
         Destroy(other.gameObject);
 
